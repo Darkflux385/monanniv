@@ -111,10 +111,10 @@ input[type=checkbox]{width:20px;height:20px;padding:0;accent-color:var(--acc);fl
 <div data-keep="" id="root"></div>
 <script data-keep="" src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script data-keep="" src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
-<script data-keep="" id="cfg" type="application/json">{"name":"Darkflux","birth":"2010-06-23","color":"#e11d1d","message":"PRéPARE TOI CA VA ETRE CHAUD !!!","messageDay":"","emoji":"🚀","codeHash":null,"v":3,"msgColor":"","msg2Color":"","tagText":"Regarde mon site","tagUrl":"https://guns.lol/darkflux","tagColor":"","music":true}</script>
+<script data-keep="" id="cfg" type="application/json">{"name":"Usrrr00","birth":"2010-06-23","color":"#8b5cf6","message":"","messageDay":"","emoji":"🚀","codeHash":null,"v":3,"msgColor":"","msg2Color":"","tagText":"","tagUrl":"","tagColor":"","music":true}</script>
 <script data-keep="" id="app">
 var e=React.createElement,useState=React.useState,useEffect=React.useEffect;
-var DEF={name:"Darkflux",birth:"2010-06-15",color:"#e11d1d",message:"",messageDay:"",emoji:"🎂",codeHash:null,msgColor:"",msg2Color:"",tagText:"",tagUrl:"",tagColor:"",music:true};
+var DEF={name:"Usrrr00",birth:"2010-06-15",color:"#e11d1d",message:"",messageDay:"",emoji:"🎂",codeHash:null,msgColor:"",msg2Color:"",tagText:"",tagUrl:"",tagColor:"",music:true};
 var DATE_RE=/^\d{4}-\d{2}-\d{2}$/;
 var HEX_RE=/^#[0-9a-fA-F]{6}$/;
 var URL_RE=/^https:\/\/[^\s"'<>]+$/i;
@@ -181,8 +181,7 @@ function loadLocal(){
   try{
     var s=lsGet(LS_KEY);if(!s)return null;
     var j=JSON.parse(s);
-    /* ignoré si la page publiée a changé depuis (la version publiée prime) */
-    if(!j||j.base!==BASE||!j.data)return null;
+    if(!j||!j.data)return null;
     return j.data;
   }catch(x){return null}
 }
@@ -193,7 +192,6 @@ var CFG=(function(){
     var l=loadLocal();
     if(l){
       var lp=Object.assign({},l);
-      delete lp.codeHash;
       if(!realDate(lp.birth))delete lp.birth;
       c=Object.assign({},c,lp);
     }
@@ -436,8 +434,6 @@ function Clock(p){
     e("h1",{className:"hb shine"},"Joyeux anniversaire"),
     nm&&e("div",{className:"name"},nm),
     e("div",{className:"ring"},e("div",null,e("div",{className:"age"},r.age),e("div",{className:"ageu"},"ans"))),
-    /* le jour J, seul le deuxième message reste affiché */
-    msgDay&&e("div",{className:"msg day",style:stylesMsg2},linkify(msgDay)),
     p.owner&&e("button",{className:"btn again",onClick:function(){Fx.show(true)}},"Relancer le feu d’artifice"),
     cfg.music&&e("button",{className:"fab l","aria-label":mon?"Couper la musique":"Lancer la musique",title:mon?"Couper la musique":"Lancer la musique",onClick:toggleMusic},mon?"🔊":"🔇"));
   return e(React.Fragment,null,
@@ -455,8 +451,6 @@ function Clock(p){
       e("div",{className:"track"},e("div",{className:"fill",style:{width:r.pr.toFixed(1)+"%"}})),
       e("div",{className:"barlbl"},Math.floor(r.pr)+"% de l’année écoulée depuis le dernier anniversaire")),
     e(Facts,{r:r,party:false}),
-    msg&&e("div",{className:"msg",style:stylesMsg},linkify(msg)),
-    msgDay&&e("div",{className:"msg",style:stylesMsg2},linkify(msgDay)),
     e(Tag,{cfg:cfg}),
     p.owner&&e("div",{className:"hint"},"Touche l’écran pour lancer des confettis (réservé à toi)"));
 }
@@ -536,16 +530,6 @@ function Sheet(p){
     e("label",{key:61,htmlFor:"set-color"},"Ou une couleur libre"),
     e("input",{key:62,id:"set-color",type:"color",value:HEX_RE.test(f.color)?f.color:DEF.color,onChange:function(x){up("color",x.target.value)}}),
     e("label",{key:8,htmlFor:"set-emoji"},"Emoji du compteur"),e("div",{key:9},e(EmojiPick,{value:f.emoji||"",onChange:function(v){up("emoji",v)}})),
-    e("label",{key:10,htmlFor:"set-msg"},"Premier message (disparaît le jour J)",e("span",{className:"cnt"},(f.message||"").length+"/160")),
-    e("textarea",{key:11,id:"set-msg",rows:2,maxLength:160,value:f.message,placeholder:"Ex : Plus que quelques dodos avant la fête !",onChange:function(x){up("message",x.target.value)}}),
-    e("label",{key:112,htmlFor:"set-mc"},"Couleur du premier message"),
-    e("div",{key:113},e(ColorField,{id:"set-mc",label:"Couleur du premier message",value:f.msgColor,fallback:"#ffffff",onChange:function(v){up("msgColor",v)}})),
-    e("button",{key:111,type:"button",className:"btn ghost small",onClick:function(){up("message","")}},"Effacer ce message"),
-    e("label",{key:12,htmlFor:"set-msgd"},"Deuxième message (en grand le jour J)",e("span",{className:"cnt"},(f.messageDay||"").length+"/160")),
-    e("textarea",{key:13,id:"set-msgd",rows:2,maxLength:160,value:f.messageDay,placeholder:"Ex : Bon anniversaire, profite à fond !",onChange:function(x){up("messageDay",x.target.value)}}),
-    e("label",{key:132,htmlFor:"set-m2c"},"Couleur du deuxième message"),
-    e("div",{key:133},e(ColorField,{id:"set-m2c",label:"Couleur du deuxième message",value:f.msg2Color,fallback:"#ffffff",onChange:function(v){up("msg2Color",v)}})),
-    e("button",{key:131,type:"button",className:"btn ghost small",onClick:function(){up("messageDay","")}},"Effacer ce message"),
     e("label",{key:20,htmlFor:"set-tagt"},"Bouton lien : texte",e("span",{className:"cnt"},(f.tagText||"").length+"/40")),
     e("input",{key:21,id:"set-tagt",maxLength:40,value:f.tagText,placeholder:"Regarde mon site",onChange:function(x){up("tagText",x.target.value)}}),
     e("label",{key:22,htmlFor:"set-tagu"},"Bouton lien : adresse (https://…)"),
