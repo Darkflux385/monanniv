@@ -501,7 +501,7 @@ function Sheet(p){
   var a=useState(false),ok=a[0],setOk=a[1],c=useState(""),code=c[0],setCode=c[1],d=useState(""),err=d[0],setErr=d[1];
   var f0=useState(cfg),f=f0[0],setF=f0[1],n0=useState(""),nc=n0[0],setNc=n0[1],s0=useState(""),saved=s0[0],setSaved=s0[1],bz=useState(false),busy=bz[0],setBusy=bz[1];
   function up(k,v){var o=Object.assign({},f);o[k]=v;setF(o);if(k==="color")applyColor(v)}
-  function unlock(){sha(code).then(function(h){var good=cfg.codeHash?h===cfg.codeHash:code==="0000";if(good){setOk(true);setErr("")}else setErr("Code incorrect.")})}
+  function unlock(){sha(code).then(function(h){var good=cfg.codeHash?h===cfg.codeHash:code==="2323";if(good){setOk(true);setErr("")}else setErr("Code incorrect.")})}
   function save(){
     if(!realDate(f.birth)){setSaved("Cette date n’existe pas ou est dans le futur.");return}
     var tu=String(f.tagUrl||"").trim();
